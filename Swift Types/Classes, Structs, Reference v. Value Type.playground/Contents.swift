@@ -37,13 +37,14 @@ class VideoMode {
 // Create An Instance of struct/class By Initialization
 let someResolution = Resolution()
 let someVideoMode = VideoMode()
+
+someResolution.
+
 // initialization: process of preparing an instance of class, struct, or enum for use
 // initialization: involves setting initial value for each stored property (vars/lets) on that instance
 // both structs & classes use initializer syntax; simplest form is intiliazing to class/struct's default value - empty parentheses ()
 // only Structs have auto-generated memberwise initializer to initialize properties of new struct instances
 let vga = Resolution(width: 1000, height: 6000)
-
-
 
 
 
@@ -62,7 +63,7 @@ print("let hd = Resolution       \(hd) - original hd")
 // declare var (cinema) & set to current value of hd
 var cinema = hd
 print("var cinema = hd           \(cinema) - hd is copied to new var cinema")
-cinema.width = 2048   // changes cinema's property (width) but not hd
+cinema.width = 2048   // changes cinema's property (width) but not hd's
 print("var cinema.width = 2048   \(cinema) - changes cinema.width, not hd's")
 print("let hd                    \(hd) - hd unchanged")
 

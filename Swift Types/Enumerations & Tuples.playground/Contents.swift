@@ -11,14 +11,15 @@ enum Directions: Int {
 
 
 // RAW VALUES: explicit type-declaration of an enum's cases w/ a primitive type
-enum compassPoint : String {
+enum compassPoint: String {
     case north, south, east, west
 }
 print(compassPoint.east) // can do w/o raw value, still prints same
 
+
 // Initializing from a Raw Value: when defining enum w/ raw-value type, enum auto receives an initializer that takes a value of the raw value's type (as a paramater called "rawValue") and returns either enum case or nil. You can use this initializer to try to create a new instance
 let possibleDirection = Directions(rawValue: 10) // possibleDirection is of optional type Directions?
-// bc not all raw values have an associated member value, raw value initializer is a faliable one
+// bc not all raw values have an associated member value, raw value initializer is a failable one
 print(possibleDirection!)
 
 
@@ -122,7 +123,7 @@ var point = (0, 0)
 print(point)
 
 point.0 = 10
-point.1 = 15
+point.1 = 17
 print(point)
 
 // Tuples Are Value Types Passed By Copy/Value
@@ -140,7 +141,7 @@ var (a, b, c) = (1, 2, 3)
 print((a, b, c))
 
 // One Line Swap
-(a, b) = (b, a)
+(a, b) = (b, a) // switch a to b, switch b to a
 print((a, b, c))
 
 // Return Multiple Values From a Function

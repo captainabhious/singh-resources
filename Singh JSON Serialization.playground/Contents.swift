@@ -25,6 +25,10 @@ func updateDogBreeds() {
         // shared = singleton - one and only task object
         (data, response, error) in // URLSession brings this back
         // data = datapackage (list of all dog breeds); response = response w/ status code
+        // CH signature: completionHandler: (Data?, URLResponse?, Error?) -> Void
+        // CH convenient when app is doing something that might take some time, like making an API call, and you need to do something when that task is done, like updating the UI to show the data
+        // URLSessionDataTask 1) makes URL request 2) waits for results 3) checks for errors and stuff
+        // CH sits around waiting to be called when dataTask is done
         
         
         // Check response 200.....
@@ -71,7 +75,7 @@ func updateDogBreeds() {
                 
                 // Else handle JSON Serialization error
             } catch {
-                print("Error deserializing JSON: \(error)")
+                print("Error deserializing JSON")
             }
             
             
