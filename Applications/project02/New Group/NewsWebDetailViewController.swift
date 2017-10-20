@@ -1,17 +1,18 @@
 //
-//  WebDetailViewController.swift
+//  NewsWebDetailViewController.swift
 //  project02
 //
-//  Created by Abhi Singh on 10/17/17.
+//  Created by Abhi Singh on 10/20/17.
 //  Copyright © 2017 Abhi Singh. All rights reserved.
 //
 
 import UIKit
 import WebKit
 
-class WebDetailViewController: UIViewController {
-    
-    @IBOutlet weak var espnWebView: WKWebView!
+class NewsWebDetailViewController: UIViewController {
+
+
+    @IBOutlet weak var NewsWebDeets: WKWebView!
     var receivingData = ""
     var receivingTitle = ""
     
@@ -19,17 +20,15 @@ class WebDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+
         let url = URL(string: receivingData)
-        espnWebView.load(URLRequest(url: url!))
- 
-        navigationItem.title = receivingTitle
+        NewsWebDeets.load(URLRequest(url: url!))
         
     }
-    
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
 
@@ -43,7 +42,4 @@ class WebDetailViewController: UIViewController {
     }
     */
 
-    
-    
-    
 }

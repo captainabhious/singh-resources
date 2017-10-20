@@ -56,9 +56,9 @@ enum SerializationError: Error {
 
 
 struct News: Decodable {
-    let status: String?
-    let source: String?
-    let sortBy: String?
+//    let status: String?
+//    let source: String?
+//    let sortBy: String?
     let articles: [Article]?
 }
 
@@ -82,8 +82,9 @@ struct NewsArticle: Decodable {
     let title: String
     let description: String
     let url: String
-    let urlToImage: String
+    let urlToImage: String?
     let publishedAt: String?
 }
+
 
 

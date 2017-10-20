@@ -13,6 +13,7 @@ class EspnTVCell: UITableViewCell {
     
     @IBOutlet weak var espnImage: UIImageView!
     @IBOutlet weak var espnTitle: UILabel!
+    @IBOutlet weak var shareButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()

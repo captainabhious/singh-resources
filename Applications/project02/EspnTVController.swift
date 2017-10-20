@@ -8,21 +8,14 @@
 
 import UIKit
 
-
-
-
 class EspnTVController: UITableViewController, UIViewControllerPreviewingDelegate {
-    
-    // shows preview
-//    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-//        let previewView = storyboard?.instantiateViewController(withIdentifier: "preview")
-//        return previewView
-//    }
 
-    
+  
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         updateEspnNow()
+
         // check for 3D haptic availability
         if traitCollection.forceTouchCapability == UIForceTouchCapability.available {
             // prepare for preview, with delegate
@@ -31,6 +24,20 @@ class EspnTVController: UITableViewController, UIViewControllerPreviewingDelegat
             print("Isn't Compatible")
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if ConnectionCheck.isConnectedToNetwork() {
+            print("Network is Reachable :)")
+        } else {
+            print("Network is NOT Reachable :(")
+            let alertController = UIAlertController(title: "issue", message: "shit", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title:"ok", style: .default, handler: nil))
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    
+    
     
     // peek
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
@@ -72,45 +79,55 @@ class EspnTVController: UITableViewController, UIViewControllerPreviewingDelegat
  
     
     
+    
+    
+    
+    
+    
+    
+    
+    
     var espnNews: News?
     
     func updateEspnNow(){
         let requestUrl = URL(string: "https://newsapi.org/v1/articles?source=espn&sortBy=top&apiKey=129fc856f7454aeca1b6726575bf23c6")
-        // http://beta.newsapi.org/v2/top-headlines?sources=espn,bleacher-report&apiKey=129fc856f7454aeca1b6726575bf23c6
-        // https://beta.newsapi.org/v2/top-headlines?sources=espn&apiKey=129fc856f7454aeca1b6726575bf23c6"
-        
-        
-        let request = URLRequest(url: requestUrl!)
-        let task = URLSession.shared.dataTask(with: request) {
-            (data, response, error) in
-            
-            guard error == nil else {
-                print("Networking Error: \(String(describing: error))")
-                return
-            }
-            guard let data = data else {
-                print("Networking Error: Did Not Receive Data")
-                return
-            }
-            
-            do {
-                self.espnNews = try
-                    JSONDecoder().decode(News.self, from: data)
-
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
+   
+          let request = URLRequest(url: requestUrl!)
+            let task = URLSession.shared.dataTask(with: request) {
+                (data, response, error) in
+                
+                guard error == nil else {
+                    print("Networking Error: \(String(describing: error))")
+                    return
+                }
+                guard let data = data else {
+                    print("Networking Error: Did Not Receive Data")
+                    return
+                }
+                
+                do {
+                    self.espnNews = try
+                        JSONDecoder().decode(News.self, from: data)
                     
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                        
+                    }
+                }
+                catch {
+                    print("Error in serializing JSON")
                 }
             }
-            catch {
-                print("Error in serializing JSON")
-            }
-        }
-        task.resume()
+            task.resume()
     }
     
     
 
+    
+    
+    
+    
+    
 
     
     override func didReceiveMemoryWarning() {
@@ -130,21 +147,35 @@ class EspnTVController: UITableViewController, UIViewControllerPreviewingDelegat
      override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
         let cell = tableView.dequeueReusableCell(withIdentifier: "espnCellIdentifier", for: indexPath) as! EspnTVCell
+        let row = indexPath.row
         
-        // Espn Picture
-        let url = URL(string: (espnNews?.articles![indexPath.row].urlToImage)!)
-        let data = try? Data(contentsOf: url!)
-        cell.espnImage.image = UIImage(data: data!)
+        // lazy loading
+        //if let validUrlToImage = espnNews!.articles![indexPath.row].urlToImage { //checks for valid image url
+        if let validUrlToImg = espnNews!.articles?[indexPath.row].urlToImage {
+            cell.espnImage.downloadImageFrom(link: validUrlToImg) // down(lazy)loads image url
+        } else {
+            cell.espnImage.image = #imageLiteral(resourceName: "noImage") // gives default "image not available" otherwise
+        }
        
         // Espn Title
         let title = espnNews?.articles![indexPath.row].title
         cell.espnTitle.text = title
-//        cell.espnTitle.text = UILabel
-//            UILabel(title: title!)
+
         
-     
+        cell.shareButton.addTarget(self, action: #selector(btnPress), for: .touchUpInside)
+        cell.shareButton.tag = row
+       
      return cell
      }
+    
+    
+    @objc func btnPress(sender: UIButton!) {
+        let activityVC = UIActivityViewController(activityItems: [self.espnNews!.articles![sender.tag].title, self.espnNews!.articles![sender.tag].url/*, self.espnNews!.articles![sender.tag].urlToImage*/], applicationActivities: nil)
+        activityVC.popoverPresentationController?.sourceView = self.view
+        self.present(activityVC, animated: true, completion: nil)
+    }
+    
+    
     
     //MARK: Passing Data
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -207,12 +238,27 @@ class EspnTVController: UITableViewController, UIViewControllerPreviewingDelegat
             }, completion: nil)
         }
     }
-
-    
- 
-
 }
 
-
+extension UIImageView {
+    
+    func downloadImageFrom(link: String)  {
+        URLSession.shared.dataTask( with: NSURL(string:link)! as URL, completionHandler: {
+            (data, response, error) -> Void in
+            if error != nil {
+                print("error", error!, Date())
+            }
+            DispatchQueue.main.async {
+                print(#line, "<-Reached")
+                self.image = nil
+                self.contentMode =  .scaleToFill
+                if let data = data {
+                    print(#line, #function)
+                    self.image = UIImage(data: data)
+                }
+            }
+        }).resume()
+    }
+}
 
 
