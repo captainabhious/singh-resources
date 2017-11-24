@@ -38,7 +38,6 @@ class VideoMode {
 let someResolution = Resolution()
 let someVideoMode = VideoMode()
 
-someResolution.
 
 // initialization: process of preparing an instance of class, struct, or enum for use
 // initialization: involves setting initial value for each stored property (vars/lets) on that instance
@@ -115,9 +114,3 @@ When to use which?
 - comparing instance identity with === makes sense
 - you want to create shared, mutable state
 */
-
-
-
-
-
-

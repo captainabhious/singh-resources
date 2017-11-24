@@ -4,7 +4,7 @@ import UIKit
 
 var str = "Hello, playground"
 
-// Dictoinaries > Arrays - unordered, fast; give it a value and
+// Dictionaries > Arrays - unordered, fast; give it a value 
 
 var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 

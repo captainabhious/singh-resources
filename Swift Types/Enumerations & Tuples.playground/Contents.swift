@@ -27,7 +27,7 @@ print(possibleDirection!)
 let myRawValue = 20
 
 //optionalbinding
-if let myDirections = Directions(rawValue: myRawValue) { // not optional anymore b/c optional binding w/ if, let statement
+if let _ = Directions(rawValue: myRawValue) { // not optional anymore b/c optional binding w/ if, let optional binding
     // can use a switch (switch myDirections { case .north, etc)
     print("success")
 } else {
@@ -152,4 +152,11 @@ func divmod(_ a: Int, _ b:Int) -> (Int, Int) {
 print(divmod(7, 3))
 print(divmod(5, 2))
 print(divmod(12, 4))
+
+
+func newSwap (first: inout String, second: inout String) {
+    (a,b) = (b,a)
+}
+
+
 

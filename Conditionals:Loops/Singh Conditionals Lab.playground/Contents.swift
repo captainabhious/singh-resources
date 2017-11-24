@@ -8,6 +8,7 @@ func randomInteger(from: Int, to: Int) -> Int {
   let difference = to - from
   
   let random = Int(arc4random_uniform(UInt32(difference)))
+
   let result = from + random
   
   if result < from {
