@@ -4,27 +4,11 @@ import UIKit
  # Swift Strings
  =======================
  
- ## Learning Objectives
+ Strings are a fundamental type in Swift, a struct that is used throughout Swift itself as well as iOS application development.
  
- * **Articulate** how Strings are stored
+ -> What is a String type?
  
- * **Manipulate** characters in Strings
- 
- * **Parse** words inside of a String
- 
- * **Iterate** through characters in a String
- 
- ## Connection to long term goal:
- 
- Strings is a fundamental type in Swift, a struct but not a class that is used throughout Swift itself as well as iOS application development.
- 
- ## Opening (5 - 10 Mins)
- 
- What is a String type?
- 
- ## Practice Problem
- 
- Write a function that takes a number represented as a String and converts it to an Int.
+
 
  ## DEFINITION
  
@@ -55,11 +39,11 @@ import UIKit
 var string: String = "Hello"
 
 // write code here 
-var chars = string.characters
+//var chars = string.characters
 
-chars.removeFirst()
+string.removeFirst()
 
-print(chars)
+print("\(string)========")
 
 /*:
 
@@ -207,7 +191,7 @@ printEmptyLines(2)
 // Filter: takes an array of x and returns smaller array of x based on which item met criteria
 // input.count >= output.count
 
-let heyOs = String(poem.characters.filter({$0 == "o"}))
+let heyOs = String(poem.filter({$0 == "o"}))
 print(heyOs)
 
 
@@ -276,9 +260,9 @@ func replaceAWithO(input: String) -> String {
 func printUnicode() {
     var i = 0
     while(true) {
-        var unicode = UnicodeScalar(i)
+        let unicode = UnicodeScalar(i)
         if let unicode = unicode {
-            var char = Character(unicode)
+            let char = Character(unicode)
             print(char, separator: "", terminator: "")
         } else {
             break
@@ -297,7 +281,7 @@ let newString = poem.unicodeScalars.map({Character(UnicodeScalar(Int($0.hashValu
 let realString = String(newString)
 print("It worked?? \(realString)")
 
-let heyyOs = String(poem.characters.filter({$0 != "." }))
+let heyyOs = String(poem.filter({$0 != "." }))
 
 //map: input.count == output.count
 //filter: input.count >= output.count
@@ -312,6 +296,48 @@ let heyyOs = String(poem.characters.filter({$0 != "." }))
 
 
 print(heyOs)
+
+
+
+
+
+let threeDoubleQuotationMarks = """
+Escaping the first quotation mark \"""
+Escaping all three quotation marks \"\"\"
+"""
+
+print(threeDoubleQuotationMarks)
+
+//let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
+//print(wiseWords)
+
+
+
+let greeting = "Hi there! It's nice to meet you! 👋"
+let endOfSentence = greeting.index(of: "!")!
+print(endOfSentence)
+let firstSentence = greeting[...endOfSentence]
+print(firstSentence)
+
+
+
+
+
+
+
+// Practice Problem
+
+//Write a function that takes a number represented as a String and converts it to an Int.
+
+func numberToStringConverter (_ numberToConvert: String) -> Int {
+    
+    return Int(numberToConvert)!
+    
+}
+
+print(numberToStringConverter("999"))
+
+
 
 
 

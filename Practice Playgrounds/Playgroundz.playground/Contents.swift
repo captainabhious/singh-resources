@@ -304,3 +304,20 @@ func subsetChecker (arr1: [Int], arr2: [Int]) -> Bool {
 
 print(subsetChecker(arr1: [1, 3, 5, 4], arr2: [5, 3, 1, 2, 7, 8]))
 
+let threeDoubleQuotationMarks = """
+Escaping the first quotation mark \"""
+Escaping all three quotation marks \"\"\"
+"""
+
+print(threeDoubleQuotationMarks)
+
+//let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
+//print(wiseWords)
+
+
+
+let greeting = "Hi there! It's nice to meet you! 👋"
+let endOfSentence = greeting.index(of: "!")!
+print(endOfSentence)
+let firstSentence = greeting[...endOfSentence]
+print(firstSentence)
