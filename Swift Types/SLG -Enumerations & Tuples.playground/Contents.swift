@@ -100,8 +100,9 @@ case .iWatch:
 
 
 
-// TUPLES: comma-seaparated list of types; group of zero or more values represented as one value
+// TUPLES: comma-separated list of types; group of zero or more values represented as one value
 // useful as the return type of a function to enable f(x) to return a single tuple containing multiple values
+// useful to store values in a quick and easy way w/o structs/dictionary
 // can have multiple differing types
 
 // decalaration: like a var or constant but enclosed in parentheses
@@ -125,6 +126,15 @@ print(point)
 point.0 = 10
 point.1 = 17
 print(point)
+
+// Accessing Tuples
+let coordinates3D = (x: 2, y: 3, z: 1)
+
+let (x3, y3, z3) = coordinates3D
+x3
+y3
+z3
+
 
 // Tuples Are Value Types Passed By Copy/Value
 var origin = (x: 0, y: 0)
@@ -157,6 +167,14 @@ print(divmod(12, 4))
 func newSwap (first: inout String, second: inout String) {
     (a,b) = (b,a)
 }
+
+
+
+
+func multipleOf(multiplier: Int, value: Int = 1) {
+    print("\(multiplier) * \(value) = \(multiplier * value)")
+}
+multipleOf(multiplier: 1, value: 4)
 
 
 

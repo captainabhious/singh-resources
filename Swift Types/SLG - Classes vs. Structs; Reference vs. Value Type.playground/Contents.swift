@@ -34,7 +34,7 @@ class VideoMode {
 }
 
 
-// Create An Instance of struct/class By Initialization
+// Create An Instance of struct/class 
 let someResolution = Resolution()
 let someVideoMode = VideoMode()
 
