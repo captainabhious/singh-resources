@@ -1,7 +1,7 @@
 //: Playground - noun: a place where people can play
 
 import UIKit
-/*
+
 var number = 7
 var array = [2, 4, 6, 8, 9, 17, 99]
 
@@ -160,7 +160,7 @@ print(canadianPrices)
 
 // example:
 let arrayOfNumbers = [1, 2, 3, 4]
-let arrayOfString = arrayOfNumbers.map { "\($0)" }
+let arrayOfString = arrayOfNumbers.flatMap { "\($0)" }
 print(arrayOfString)
 
 
@@ -234,7 +234,7 @@ func reverse (arr: [Int]) {
 }
 
 //print(reverse(arr: [2, 4, 6, 8]))
-*/
+
 
 
 //1 2 3 4
