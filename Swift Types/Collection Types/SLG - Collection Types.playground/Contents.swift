@@ -58,16 +58,31 @@ if let i = students.index(of: "Tennyson") { // find match with index of: "Tenny"
 // Growing Size of An Array
 // reserveCapacity(_:) method: https://developer.apple.com/documentation/swift/array
 
-// Modifying Copies of Arrays
-// - Arrays are 
+
+// VALUE TYPE: Modifying Copies of Arrays
+// - Arrays are value types; they're copied when assigned to var or let or when passed to a f(x)
+// - copying creates an independent instance w/ its own unique copy of its data
+// - so when a value is changed in one array, value of that element doesn't change in any copies
+
+var numbers = [1, 2, 3, 4, 5]
+var numbersCopy = numbers
+numbers[0] = 100
+print(numbers) // [100, 2, 3, 4, 5]
+print(numbersCopy) // [1, 2, 3, 4, 5]
 
 
 
+// REFERENCE TYPE: An integer type with reference semantics
+class IntegerReference {
+    var value = 10
+}
+var firstIntegers = [IntegerReference(), IntegerReference()] // instantiating class w/ default properties ()
+var secondIntegers = firstIntegers
 
-
-
-
-
+// Modifications to an instance are visible from either array bc both arrays contain references to same object
+firstIntegers[0].value = 100
+print(firstIntegers[0].value) // 100
+print(secondIntegers[0].value) // 100
 
 
 
