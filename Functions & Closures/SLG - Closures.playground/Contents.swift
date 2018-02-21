@@ -99,6 +99,9 @@ reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in
 
 
 
+reversedNames = names.sorted(by: { s1, s2 in s1 > s2 } )
+
+print(reversedNames)
 
 
 

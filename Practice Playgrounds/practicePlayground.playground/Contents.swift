@@ -8,6 +8,7 @@ var numberOfLegs = [0, 1, 2, 3, 4, 5, 6]
 
 for numberOfLeg in numberOfLegs {
     
+    
     switch numberOfLeg {
     case 0:
         print("I'm a snake probably")

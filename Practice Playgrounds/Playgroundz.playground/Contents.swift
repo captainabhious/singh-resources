@@ -93,7 +93,7 @@ var reversedConciseClosureNames = names.sorted(by: { s1, s2 in return s1 > s2 } 
 print(reversedConciseClosureNames)
 
 // omit return keyword b/c func type of sorted by is a Bool & bc s1>s2 indicates Bool
-//reversedNames = names.sorted(by: { s1, s2 in s1 > s2 } )
+reversedConciseClosureNames = names.sorted(by: { s1, s2 in s1 > s2 } )
 
 
 var longNumber: Double = 0.64155629
@@ -167,9 +167,6 @@ print(arrayOfString)
 // http://www.mokacoding.com/blog/when-to-use-map-flatmap-for/
 
 // FLATMAP: when need to transform the contents of an array of arrays into a linear array
-
-
-
 
 
 
@@ -321,3 +318,32 @@ let endOfSentence = greeting.index(of: "!")!
 print(endOfSentence)
 let firstSentence = greeting[...endOfSentence]
 print(firstSentence)
+
+
+
+
+
+var input = [4,2,8,5,20,1,40,13,23]
+var a = 1
+var b = 0
+//var emptyArr: [Int]()
+var thing = input.sorted()
+var lastValue = thing.last
+print(thing)
+print(lastValue)
+
+
+//for _ in 1...fibCount {
+//    let temp = a + b
+//    b = a
+//    a = temp
+//
+//}
+//
+
+
+
+
+
+
+
