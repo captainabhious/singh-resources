@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <style>
+    p,div {margin:0;padding:0}
+    img {max-width:100%;}
+    body {font-family:Arial, Helvetica, sans-serif;margin:0;padding:16px}
+    #titlearea {border-bottom:1px solid #ccc;font-size:17px;padding:10px}
+    #contentarea {font-size:15px;margin:16px 0}
+    .cell {outline:none;min-height:20px;word-wrap:break-word;margin:5px 0;padding:5px 10px;line-height:1.4}
+    code {font-size:13px}
+  </style>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/highlight.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true,
+        processClass: 'latex-cell'
+      },
+      "HTML-CSS": {
+        preferredFont: "STIX"
+      }
+    };
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/styles/docco.min.css">
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="tex2jax_ignore">
+  <div id="titlearea">
+    <div id="title">Function</div>
+  </div>
+  <div id="contentarea"><div class='cell text-cell'><h2>Function Syntax</h2></div><pre class='cell code-cell'><code>func functionName(argumentLabel parameterName: Type) -&gt; ReturnType {
+  return returnValue
+}</code></pre><div class='cell text-cell'><h2>Functions Without Parameters</h2></div><pre class='cell code-cell'><code>func sayHelloWorld() -&gt; String {
+    return &quot;hello, world&quot;
+}</code></pre><div class='cell text-cell'><h2>Same Function Name</h2></div><div class='cell text-cell'><ul><li>Functions can have same ‘functionName’ so long as the compiler can differentiate between the two while calling</li><ul><li>can be done via different external names</li><li>can be done via different type declaration (Int, Double, String, etc)</li></ul></ul></div><pre class='cell code-cell'><code>func multipleOf(multiplier: Int, value: Int = 1) {
+  print(&quot;\(multiplier) * \(value) = \(multiplier * value)&quot;)
+}
+multipleOf(multiplier: 1, value: 2)
+
+// different parameter external name
+func multipleOf(_ multiplier: Int, and value: Int = 1) {
+  print(&quot;\(multiplier) * \(value) = \(multiplier * value)&quot;)
+}
+multipleOf(1, and: 2)</code></pre><div class='cell text-cell'><ul><li>Can also be done via different return -&gt; types if (empty parameters) or same parameters</li><ul><li>same funcName but -&gt; Int, -&gt; String, etc.</li><li>* but during function call, need to help compiler differentiate</li></ul></ul></div><pre class='cell code-cell'><code>let value: String = getValue() // getValue() are the two funcs (Int/String) but saying value is of type String helps differentiate</code></pre><div class='cell text-cell'><h2>Function Parameters Are Constants By Default</h2><ul><li>Can’t have functions that modify it’s parameters&nbsp;</li><ul><li>funcParameters are ‘let' constants</li></ul></ul></div><pre class='cell code-cell'><code>// Error: 
+func incrementAndPrint(_ value: Int) {
+  value += 1
+  print(value)
+}
+// prints out ERROR!
+// Reason: Swift copies value before passing to the function - this behavior is called &quot;pass by value&quot;</code></pre><div class='cell text-cell'><h2>Variadic Parameters</h2><ul><li>A variadic parameter accepts 0 or more values of a specified type</li><ul><li>use this to specify that parameter can be passed a varying # of input values during func’s call</li><li>write variadic parameters by inserting 3 periods (…) after paramter’s type name</li></ul></ul></div><pre class='cell code-cell'><code>func arithmeticMean (_ numbers: Double...) -&gt; Double {
+  var total: Double = 0
+  for number in numbers { // values passed are available w/in body as an array [numbers] of same type (Double)
+    total += number
+  }
+  return total/Double(numbers.count)
+}
+
+arithmeticMean(1, 2, 3, 4, 5) // 3.0</code></pre><div class='cell text-cell'><ul><li>* a function may have at most 1 variadic parameter</li></ul></div><div class='cell text-cell'><h2>In-Out Parameters</h2><ul><li>Used if you want a func to modify it’s parameter value and want those changes to persist after the func call has ended</li><li>In-out function declared by adding ‘inout’ keyword in front of the parameter’s type&nbsp;</li></ul></div><pre class='cell code-cell'><code>func incrementAndPrint(_ value: inout Int) {
+  value += 1
+  print(value)
+}
+
+var value3 = 5 // can ONLY pass a var as argument for in-out parameter b/c constants/literals can&#39;t be modified
+incrementAndPrint(&amp;value3) // 6; function call requires ampersand (&amp;) in front of var&#39;s name to indicate it will be modified by the func</code></pre><div class='cell text-cell'><h2>Functions Are Data Types</h2><ul><li>Can assign functions to variables/constants (like an Int/String)</li><li>Function’s specific “type” is made up of its parameter types &amp; return type</li><ul><li>i.e: (Int, Int) -&gt; Int</li></ul></ul></div><pre class='cell code-cell'><code>// Addition
+func add (_ a: Int, _ b: Int) -&gt; Int {
+  return a + b
+}
+
+var function = add // storing function inside variable
+function(4, 2) // 6; calling func add, but doing so by calling variable
+
+// Subtraction
+func subtract (_ a: Int, _ b: Int) -&gt; Int {
+  return a - b
+}
+
+function = subtract
+function(4,2) // 2</code></pre><div class='cell text-cell'><h2>Function Types as Parameter Types</h2><ul><li>Can use a function type, i.e: (Int, Int) -&gt; Int, as a parameter type for another function</li><ul><li>allows you to leave some aspects of a function’s implementation for the function’s caller to provide</li></ul></ul></div><pre class='cell code-cell'><code>func addTwoInts(_ a: Int, _ b: Int) -&gt; Int {
+    return a + b
+}
+
+func printMathResult(_ mathFunction: (Int, Int) -&gt; Int, _ a: Int, _ b: Int) {
+    print(&quot;Result: \(mathFunction(a, b))&quot;) // a, b are (Int, Int) &amp; are input values 
+}
+
+printMathResult(addTwoInts, 3, 5)
+// prints &quot;Result: 8&quot;</code></pre><div class='cell text-cell'><ul><li>Can pass the function ‘addTwoInts’ as parameter for ‘mathFunction’ b/c they’re of the same type</li><li>Role of printMathFunction is to print result of a call to a mathFunc of appropriate type</li></ul></div><div class='cell text-cell'><h2>Function Types as Return Types</h2><ul><li>Can use function type as return type of another function</li><ul><li>do this by writing func type after -&gt;</li></ul></ul></div><pre class='cell code-cell'><code>func stepForward(_ input: Int) -&gt; Int {
+    return input + 1
+}
+func stepBackward(_ input: Int) -&gt; Int {
+    return input - 1
+}
+
+func chooseStepFunction(backward: Bool) -&gt; (Int) -&gt; Int {
+    return backward ? stepBackward : stepForward
+}
+
+var currentValue = 3
+let moveNearerToZero = chooseStepFunction(backward: currentValue &gt; 0)
+
+print(moveNearerToZero(currentValue)) // prints &quot;2&quot;
+
+while currentValue != 0 {
+    print(&quot;\(currentValue)... &quot;)
+    currentValue = moveNearerToZero(currentValue)
+}
+// prints &quot;3&quot;, &quot;2&quot;, &quot;1&quot;
+</code></pre><div class='cell text-cell'></div><div class='cell text-cell'></div><div class='cell text-cell'></div><div class='cell text-cell'></div><div class='cell text-cell'></div><div class='cell text-cell'></div><div class='cell text-cell'></div><div class='cell text-cell'></div><div class='cell text-cell'></div><div class='cell text-cell'></div></div>
+</body>
+</html>
